@@ -7,7 +7,13 @@ void fillArray(int(&arr)[10]){ //int arr 10 ssilka na masiv iz 10 chisel
         arr[i] = rand() % 100;
     }
 }
- // вывод на экран массива 
+void printArray(int (&arr)[10]) { // вывод на экран массива 
+    for (auto x : arr) {
+        std::cout << x << " ";
+    }
+    std::cout << std::endl;
+}
+// вывод на экран массива 
 void swapElement(int(&arr)[10], int& i1,int& i2){
     for (auto x : arr){ // каждый элемент проходим
         std::cout << x << " ";
@@ -21,14 +27,19 @@ void multiplyByTwo(int(&arr)[10]){
         x = x * 2;
     }
 }
-
-int main(){
+int main() {
     srand(time(0));
-    int arr[10]; //10 massiv 4isel
-    std::cout << "Task 1\n\n";
 
+    int arr[10];  // массив из 10 чисел
+
+    std::cout << "Задание 1\n\n";
+
+    // Заполняем
     fillArray(arr);
-    std::cout << "Massiv";
+    std::cout << "Массив: ";
     printArray(arr);
 
+
+
+    
 }
