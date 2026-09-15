@@ -39,7 +39,16 @@ int main() {
     std::cout << "Массив: ";
     printArray(arr);
 
+    int a = 0;
+    int b = 9;
+    swapElement(arr, a, b);
+    std::cout << "После обмена: ";
+    printArray(arr);
 
+    // Умножаем каждый элемент на 2
+    multiplyByTwo(arr);
+    std::cout << "После умножения: ";
+    printArray(arr);
 
-    
+    return 0;
 }
