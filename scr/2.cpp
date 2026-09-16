@@ -28,7 +28,7 @@ void process(int*& arr, int& size) {
     }
 
     //  ОСВОБОЖДАЕМ старую память 
-    delete[] arr;   // delete[], потому что массив
+    delete[] arr;   // delete  потому что массив
 
     //  ПЕРЕКЛЮЧАЕМ указатель на новый массив 
     arr = newArr;
@@ -45,7 +45,7 @@ int main() {
     cin >> N;
 
     // Выделяем память 
-    int* arr = new int[N]{};   // {} — обнуляем массив
+    int* arr = new int[N]{};   //  обнуляем массив
 
     // Заполняем 
     cout << "Введи " << N << " чисел:\n";
@@ -62,15 +62,36 @@ int main() {
 
     
     process(arr, N);
+     process(arr, N);
 
+    // выводим 
+    cout << "Результат: ";
+    for (int i = 0; i < N; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << "\n";
 
+    //  освобождаем память 
+    delete[] arr;
 
+    // обнуляем указатель 
+    arr = nullptr;
 
+    //Проверка
+    if (arr == nullptr) {
+        cout << "\nУказатель обнулён — безопасно\n";
+    }
 
-
-
-
-
-
-
+    return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
