@@ -37,6 +37,32 @@ void process(int*& arr, int& size) {
     size = newSize;
 }
 
+int main() {
+    cout << "Задание 2\n\n";
+
+    int N;
+    cout << "Размер массива: ";
+    cin >> N;
+
+    // Выделяем память 
+    int* arr = new int[N]{};   // {} — обнуляем массив
+
+    // Заполняем 
+    cout << "Введи " << N << " чисел:\n";
+    for (int i = 0; i < N; i++) {
+        cin >> arr[i];
+    }
+
+    //ыводим исходный 
+    cout << "\nИсходный: ";
+    for (int i = 0; i < N; i++) {
+        cout << arr[i] << " ";
+    }
+    cout << "\n";
+
+    
+    process(arr, N);
+
 
 
 
