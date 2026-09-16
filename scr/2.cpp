@@ -17,7 +17,25 @@ void process(int*& arr, int& size) {
     }
 
     // Вывод на какой позиции нашли
-    cout << "Первый отрицательный
+   cout << "Первый отрицательный на позиции " << negIndex << "\n";
+
+    //  СОЗДАЁМ новый массив 
+    int newSize = negIndex;              
+    int* newArr = new int[newSize]{};    // бнуляем элементы
+
+    for (int i = 0; i < newSize; i++) {
+        newArr[i] = arr[i];
+    }
+
+    //  ОСВОБОЖДАЕМ старую память 
+    delete[] arr;   // delete[], потому что массив
+
+    //  ПЕРЕКЛЮЧАЕМ указатель на новый массив 
+    arr = newArr;
+
+    //  ОБНОВЛЯЕМ размер 
+    size = newSize;
+}
 
 
 
