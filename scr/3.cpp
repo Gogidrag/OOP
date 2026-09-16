@@ -21,3 +21,36 @@ int& getElement(SafeArray& arr, int index) {
     }
     return arr.data[index];
 }
+void printSafe(const SafeArray& arr) {
+    cout << "[ ";
+    for (int i = 0; i < arr.size; i++) {
+        cout << arr.data[i] << " ";
+    }
+    cout << "]\n";
+}
+
+void reSizeArray(SafeArray& arr, int newSize) {
+    int* newData = new int[newSize]{};   // новый массив (обнулён)
+
+    
+    if (newSize < arr.size) {
+        cout << "Удаляемые элементы: ";
+        for (int i = newSize; i < arr.size; i++) {
+            cout << arr.data[i] << " ";
+        }
+        cout << endl;
+    }
+
+    // Копируем
+    int count = (newSize < arr.size) ? newSize : arr.size;
+    for (int i = 0; i < count; i++) {
+        newData[i] = arr.data[i];
+    }
+
+    delete[] arr.data;   // освобождаем старую память
+    arr.data = newData;  // переключаем указатель
+    arr.size = newSize;  // обновляем размер
+}
+
+
+
