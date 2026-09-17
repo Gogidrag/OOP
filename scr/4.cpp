@@ -47,3 +47,39 @@ void printMatrix(int** matrix, int rows, int cols,
         cout << "\n";
     }
 }
+
+
+// Освобождение памяти
+void freeMatrix(int** matrix, int rows) {
+    for (int i = 0; i < rows; i++) {
+        delete[] matrix[i];
+    }
+    delete[] matrix;
+}
+
+int main() {
+    srand(time(0));
+
+    cout << "Задание 4\n";
+
+    int rows = 3;
+    int cols = 4;
+
+    // Создаём и заполняем
+    int** matrix = allocateMatrix(rows, cols);
+    fillMatrix(matrix, rows, cols);
+
+    //  Без доп. параметров
+    printMatrix(matrix, rows, cols);
+
+    // С заголовком
+    printMatrix(matrix, rows, cols, true, "Моя матрица");
+
+    // Без рамки
+    printMatrix(matrix, rows, cols, false, "Без рамки");
+
+    // Освобождаем
+    freeMatrix(matrix, rows);
+
+    return 0;
+}
