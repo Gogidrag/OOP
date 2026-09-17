@@ -9,21 +9,6 @@
  * @author Gogidrag Минаев Дмитрий 606-42
  * @date 2026
  * @version первая
- * 
- * @mainpage Диаграмма деятельности (PlantUML)
- * 
- * @startuml
- * start
- * :srand(time(0));
- * :int arr[10];
- * :fillArray(arr);
- * :printArray(arr);
- * :swapElement(arr, 0, 9);
- * :printArray(arr);
- * :multiplyByTwo(arr);
- * :printArray(arr);
- * stop
- * @enduml
  */
 
 #include <iostream>

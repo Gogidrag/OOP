@@ -1,5 +1,5 @@
 /**
- * @file 3.cpp
+ * @file task3.cpp
  * @brief Задание 3: безопасный массив (SafeArray)
  * 
  * Программа демонстрирует работу со структурой SafeArray,
@@ -10,28 +10,9 @@
  * - printSafe — вывод массива
  * - reSizeArray — изменение размера
  * 
- * @author Gogidrag Минаеев дима 606-42 
+ * @author Gogidrag Минаев Дмитрий 606-42
  * @date 2026
  * @version 1
- * 
- * @mainpage Диаграмма деятельности (PlantUML)
- * 
- * @startuml
- * start
- * :createArray(5);
- * :Заполнить массив;
- * :printSafe(arr);
- * :getElement(arr, 2) = 999;
- * :printSafe(arr);
- * :getElement(arr, 10) — ошибка;
- * :reSizeArray(arr, 3);
- * :printSafe(arr);
- * :reSizeArray(arr, 7);
- * :printSafe(arr);
- * :delete[] arr.data;
- * :arr.data = nullptr;
- * stop
- * @enduml
  */
 
 #include <iostream>
