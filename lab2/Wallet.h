@@ -25,7 +25,7 @@ private:
     static int objectCount;  ///< Счётчик существующих объектов
 
 public:
-Wallet();
+    Wallet();
     Wallet(int id, Owner owner, double balance, Currency currency);
     Wallet(const Wallet& other);
     ~Wallet();
@@ -36,3 +36,14 @@ Wallet();
     Currency getCurrency() const;
     bool getIsBlocked() const;
     static int getObjectCount();
+
+    bool deposit(double amount);
+    bool withdraw(double amount);
+    bool transfer(Wallet& other, double amount);
+    void block();
+    void unblock();
+
+    void printInfo() const;
+    bool isValid() const;
+};
+#endif
