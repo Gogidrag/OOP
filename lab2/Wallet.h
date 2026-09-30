@@ -25,4 +25,14 @@ private:
     static int objectCount;  ///< Счётчик существующих объектов
 
 public:
-}
+Wallet();
+    Wallet(int id, Owner owner, double balance, Currency currency);
+    Wallet(const Wallet& other);
+    ~Wallet();
+
+    int getId() const;
+    Owner getOwner() const;
+    double getBalance() const;
+    Currency getCurrency() const;
+    bool getIsBlocked() const;
+    static int getObjectCount();
