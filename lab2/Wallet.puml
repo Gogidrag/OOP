@@ -1,0 +1,68 @@
+@startuml Wallet
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class Owner <<struct>> {
+    + fullName : std::string
+    + passport : std::string
+    --
+    + Owner()
+    + Owner(fullName : std::string, passport : std::string)
+}
+
+enum Currency <<enumeration>> {
+    RUB
+    USD
+    EUR
+}
+
+class Wallet {
+    - id : int
+    - owner : Owner
+    - balance : double
+    - currency : Currency
+    - isBlocked : bool
+    - {static} objectCount : int
+    --
+    + Wallet()
+    + Wallet(id : int, owner : Owner, balance : double, currency : Currency)
+    + Wallet(other : Wallet&)
+    + ~Wallet()
+    --
+    + getId() : int
+    + getOwner() : Owner
+    + getBalance() : double
+    + getCurrency() : Currency
+    + getIsBlocked() : bool
+    + {static} getObjectCount() : int
+    --
+    + deposit(amount : double) : bool
+    + withdraw(amount : double) : bool
+    + transfer(other : Wallet&, amount : double) : bool
+    + block() : void
+    + unblock() : void
+    --
+    + printInfo() : void
+    + isValid() : bool
+}
+
+Wallet *-- Owner : содержит >
+Wallet *-- Currency : содержит >
+
+note right of Wallet
+    Инварианты:
+    balance >= 0
+    id > 0
+    owner.fullName != ""
+    owner.passport != ""
+    заблокированный не совершает операции
+end note
+
+note bottom of Wallet
+    3 способа создания:
+    1. Wallet() — по умолчанию
+    2. Wallet(id, owner, balance, currency)
+    3. Wallet(other) — копирования
+end note
+
+@enduml
