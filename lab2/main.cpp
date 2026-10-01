@@ -112,3 +112,53 @@ int main()
     {
         std::cout << "❌ w3 изменился — ошибка!\n\n";
     }
+
+    //
+    // ЭТАП 7: ПРОВЕРКА ИНВАРИАНТОВ
+    //
+    std::cout << "=== ЭТАП 7: ПРОВЕРКА ИНВАРИАНТОВ ===\n\n";
+    std::cout << "w1 корректен: " << (w1.isValid() ? "✅ да" : "❌ нет") << "\n";
+    std::cout << "w2 корректен: " << (w2.isValid() ? "✅ да" : "❌ нет") << "\n";
+    std::cout << "w3 корректен: " << (w3.isValid() ? "✅ да" : "❌ нет") << "\n\n";
+
+    //
+    // ЭТАП 8: ПРОВЕРКА ИСКЛЮЧЕНИЙ
+    //
+    std::cout << "=== ЭТАП 8: ПРОВЕРКА ИСКЛЮЧЕНИЙ ===\n\n";
+
+    // ID = 0
+    try
+    {
+        Wallet bad(0, {"Тест", "0000"}, 100, Currency::RUB);
+    }
+    catch (const std::exception &e)
+    {
+        std::cout << "✅ Поймано исключение: " << e.what() << "\n";
+    }
+
+    // Пустое имя
+    try
+    {
+        Wallet bad(1, {"", "0000"}, 100, Currency::RUB);
+    }
+    catch (const std::exception &e)
+    {
+        std::cout << "✅ Поймано исключение: " << e.what() << "\n";
+    }
+
+    // Отрицательный баланс
+    try
+    {
+        Wallet bad(1, {"Тест", "0000"}, -100, Currency::RUB);
+    }
+    catch (const std::exception &e)
+    {
+        std::cout << "✅ Поймано исключение: " << e.what() << "\n";
+    }
+
+    std::cout << "\n";
+    std::cout << "=== КОНЕЦ ТЕСТА ===\n";
+    std::cout << "Всего объектов перед выходом: " << Wallet::getObjectCount() << "\n\n";
+
+    return 0;
+}
