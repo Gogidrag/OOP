@@ -72,3 +72,89 @@ bool Wallet::deposit(double amount) {
               << ". Баланс: " << balance << "\n";
     return true;
 }
+//  СПИСАНИЕ 
+bool Wallet::withdraw(double amount) {
+    if (isBlocked) {
+        std::cout << "❌ Ошибка: кошелёк #" << id << " заблокирован\n";
+        return false;
+    }
+    if (amount <= 0) {
+        std::cout << "❌ Ошибка: сумма списания должна быть > 0\n";
+        return false;
+    }
+    // Проверка достаточности средств
+    if (amount > balance) {
+        std::cout << "❌ Ошибка: недостаточно средств (баланс: " 
+                  << balance << ", запрошено: " << amount << ")\n";
+        return false;
+    }
+    balance -= amount;
+    std::cout << "💸 Кошелёк #" << id << " списано " << amount 
+              << ". Баланс: " << balance << "\n";
+    return true;
+}
+
+//  ПЕРЕВОД 
+bool Wallet::transfer(Wallet& other, double amount) {
+    // Проверка блокировки обоих
+    if (isBlocked || other.isBlocked) {
+        std::cout << "❌ Ошибка: один из кошельков заблокирован\n";
+        return false;
+    }
+    // Проверка валют
+    if (currency != other.currency) {
+        std::cout << "❌ Ошибка: разные валюты\n";
+        return false;
+    }
+    // Проверка суммы
+    if (amount <= 0 || amount > balance) {
+        std::cout << "❌ Ошибка: неверная сумма перевода\n";
+        return false;
+    }
+    
+    balance -= amount;
+    other.balance += amount;
+    std::cout << "🔄 Перевод " << amount << " с #" << id 
+              << " на #" << other.id << "\n";
+    return true;
+}
+
+//  БЛОКИРОВКА
+void Wallet::block() {
+    isBlocked = true;
+    std::cout << "🔒 Кошелёк #" << id << " заблокирован\n";
+}
+
+// РАЗБЛОКИРОВКА
+void Wallet::unblock() {
+    isBlocked = false;
+    std::cout << "🔓 Кошелёк #" << id << " разблокирован\n";
+}
+
+//  ВЫВОД ИНФОРМАЦИИ 
+void Wallet::printInfo() const {
+    std::cout << "┌─────────────────────────────┐\n";
+    std::cout << "│ ID:       " << id << "\n";
+    std::cout << "│ Владелец: " << owner.fullName << "\n";
+    std::cout << "│ Паспорт:  " << owner.passport << "\n";
+    std::cout << "│ Баланс:   " << balance << " ";
+    
+    // Вывод валюты через switch
+    switch (currency) {
+        case Currency::RUB: std::cout << "RUB"; break;
+        case Currency::USD: std::cout << "USD"; break;
+        case Currency::EUR: std::cout << "EUR"; break;
+    }
+    
+    std::cout << "\n";
+    std::cout << "│ Статус:   " << (isBlocked ? "🔒 заблокирован" : "✅ активен") << "\n";
+    std::cout << "└─────────────────────────────┘\n";
+}
+
+// ПРОВЕРКА ИНВАРИАНТОВ 
+bool Wallet::isValid() const {
+    return balance >= 0 
+        && id > 0 
+        && !owner.fullName.empty()
+        && !owner.passport.empty();
+}
