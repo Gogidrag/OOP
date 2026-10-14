@@ -169,3 +169,49 @@ RGBColor operator/(RGBColor lhs, int factor) {
     lhs /= factor;
     return lhs;
 }
+
+// СРАВНЕНИЕ: < (по яркости)
+bool RGBColor::operator<(const RGBColor& other) const {
+    return getBrightness() < other.getBrightness();
+}
+
+// СРАВНЕНИЕ: > (по яркости)
+bool RGBColor::operator>(const RGBColor& other) const {
+    return getBrightness() > other.getBrightness();
+}
+
+// СРАВНЕНИЕ: <=
+bool RGBColor::operator<=(const RGBColor& other) const {
+    return getBrightness() <= other.getBrightness();
+}
+
+// СРАВНЕНИЕ: >=
+bool RGBColor::operator>=(const RGBColor& other) const {
+    return getBrightness() >= other.getBrightness();
+}
+
+// СРАВНЕНИЕ: == (по всем каналам)
+bool RGBColor::operator==(const RGBColor& other) const {
+    return red == other.red && green == other.green && blue == other.blue;
+}
+
+// СРАВНЕНИЕ: != (через ==)
+bool RGBColor::operator!=(const RGBColor& other) const {
+    return !(*this == other);
+}
+
+// ВЫВОД ИНФОРМАЦИИ
+void RGBColor::printInfo() const {
+    ++viewCount;    // mutable — можно менять в const-методе
+    
+    std::cout << "RGB(" << red << ", " << green << ", " << blue << ")"
+              << " | Яркость: " << getBrightness()
+              << " | Просмотров: " << viewCount << "\n";
+}
+
+// ПРОВЕРКА КОРРЕКТНОСТИ
+bool RGBColor::isValid() const {
+    return red >= 0 && red <= 255
+        && green >= 0 && green <= 255
+        && blue >= 0 && blue <= 255;
+}
