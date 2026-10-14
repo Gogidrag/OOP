@@ -84,4 +84,37 @@ int main() {
     RGBColor q = b / 2;
     std::cout << "b / 2: ";
     q.printInfo();
+     // СРАВНЕНИЕ 
+    std::cout << "\n=== ЭТАП 5: СРАВНЕНИЕ ===\n\n";
+    RGBColor small(50, 50, 50);
+    RGBColor big(100, 100, 100);
     
+    std::cout << "small < big: " << (small < big ? "true" : "false") << "\n";
+    std::cout << "small > big: " << (small > big ? "true" : "false") << "\n";
+    std::cout << "small <= big: " << (small <= big ? "true" : "false") << "\n";
+    std::cout << "small >= big: " << (small >= big ? "true" : "false") << "\n";
+    std::cout << "small == big: " << (small == big ? "true" : "false") << "\n";
+    std::cout << "small != big: " << (small != big ? "true" : "false") << "\n";
+    
+    // EXPLICIT
+    std::cout << "\n=== ЭТАП 6: EXPLICIT ===\n\n";
+    // RGBColor bad = 150;
+    RGBColor good(150);
+    std::cout << "good (explicit): ";
+    good.printInfo();
+    
+    // MUTABLE + CONST
+    std::cout << "\n=== ЭТАП 7: MUTABLE + CONST объект ===\n\n";
+    const RGBColor constColor(70, 80, 90);
+    std::cout << "constColor (const, но viewCount растёт):\n";
+    constColor.printInfo();
+    constColor.printInfo();
+    constColor.printInfo();
+    
+    // СТАТИЧЕСКИЙ СЧЁТЧИК
+    std::cout << "\n=== ЭТАП 8: СТАТИЧЕСКИЙ СЧЁТЧИК ===\n\n";
+    std::cout << "Всего цветов: " << RGBColor::getColorCount() << "\n";
+    
+    std::cout << "\n===== КОНЕЦ ТЕСТА =====\n\n";
+    return 0;
+}
