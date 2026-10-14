@@ -1,9 +1,13 @@
-#include "RGBсolor.h"
+#include "RGBColor.h"
 
-// Инициализация статического поля
+/**
+ * @brief Инициализация статического поля
+ */
 int RGBColor::colorCount = 0;
 
-// КОНСТРУКТОР ПО УМОЛЧАНИЮ (0, 0, 0)
+/**
+ * @brief Конструктор по умолчанию (0,0,0)
+ */
 RGBColor::RGBColor()
     : red(0), green(0), blue(0), viewCount(0)
 {
@@ -11,11 +15,15 @@ RGBColor::RGBColor()
     std::cout << "✅ Создан цвет по умолчанию (0,0,0). Всего: " << colorCount << "\n";
 }
 
-// ПАРАМЕТРИЗОВАННЫЙ КОНСТРУКТОР
+/**
+ * @brief Параметризованный конструктор
+ * @param r Красный (0-255)
+ * @param g Зелёный (0-255)
+ * @param b Синий (0-255)
+ */
 RGBColor::RGBColor(int r, int g, int b)
     : red(r), green(g), blue(b), viewCount(0)
 {
-    // Обрезаем значения до 0-255
     if (red < 0) red = 0;
     if (red > 255) red = 255;
     if (green < 0) green = 0;
@@ -28,7 +36,10 @@ RGBColor::RGBColor(int r, int g, int b)
               << "). Всего: " << colorCount << "\n";
 }
 
-// EXPLICIT КОНСТРУКТОР (серый цвет)
+/**
+ * @brief Explicit-конструктор (серый)
+ * @param brightness Яркость (0-255)
+ */
 RGBColor::RGBColor(int brightness)
     : red(brightness), green(brightness), blue(brightness), viewCount(0)
 {
@@ -41,7 +52,11 @@ RGBColor::RGBColor(int brightness)
     std::cout << "✅ Создан серый цвет (" << red << "," << green << "," << blue 
               << "). Всего: " << colorCount << "\n";
 }
-// КОНСТРУКТОР КОПИРОВАНИЯ
+
+/**
+ * @brief Конструктор копирования
+ * @param other Копируемый объект
+ */
 RGBColor::RGBColor(const RGBColor& other)
     : red(other.red), green(other.green), blue(other.blue), viewCount(0)
 {
@@ -49,20 +64,24 @@ RGBColor::RGBColor(const RGBColor& other)
     std::cout << "✅ Создан цвет (копия). Всего: " << colorCount << "\n";
 }
 
-// ДЕСТРУКТОР
+/**
+ * @brief Деструктор
+ */
 RGBColor::~RGBColor() {
     --colorCount;
     std::cout << "🗑️  Удалён цвет. Осталось: " << colorCount << "\n";
 }
 
-// ГЕТТЕРЫ
 int RGBColor::getRed() const { return red; }
 int RGBColor::getGreen() const { return green; }
 int RGBColor::getBlue() const { return blue; }
 int RGBColor::getBrightness() const { return red + green + blue; }
 int RGBColor::getColorCount() { return colorCount; }
 
-// ПРЕФИКСНЫЙ ++
+/**
+ * @brief Префиксный ++
+ * @return Ссылка на изменённый объект
+ */
 RGBColor& RGBColor::operator++() {
     if (red < 255) ++red;
     if (green < 255) ++green;
@@ -70,14 +89,19 @@ RGBColor& RGBColor::operator++() {
     return *this;
 }
 
-// ПОСТФИКСНЫЙ ++
+/**
+ * @brief Постфиксный ++
+ * @return Копия ДО изменения
+ */
 RGBColor RGBColor::operator++(int) {
-    RGBColor old = *this;   // копия ДО изменения
-    ++(*this);              // используем префиксный
+    RGBColor old = *this;
+    ++(*this);
     return old;
 }
 
-// ПРЕФИКСНЫЙ --
+/**
+ * @brief Префиксный --
+ */
 RGBColor& RGBColor::operator--() {
     if (red > 0) --red;
     if (green > 0) --green;
@@ -85,20 +109,24 @@ RGBColor& RGBColor::operator--() {
     return *this;
 }
 
-// ПОСТФИКСНЫЙ --
+/**
+ * @brief Постфиксный --
+ */
 RGBColor RGBColor::operator--(int) {
     RGBColor old = *this;
     --(*this);
     return old;
 }
 
-// ОПЕРАТОР +=
+/**
+ * @brief Сложение с присваиванием
+ * @param other Другой цвет
+ */
 RGBColor& RGBColor::operator+=(const RGBColor& other) {
     red += other.red;
     green += other.green;
     blue += other.blue;
     
-    // Обрезаем до 255
     if (red > 255) red = 255;
     if (green > 255) green = 255;
     if (blue > 255) blue = 255;
@@ -106,13 +134,15 @@ RGBColor& RGBColor::operator+=(const RGBColor& other) {
     return *this;
 }
 
-// ОПЕРАТОР -=
+/**
+ * @brief Вычитание с присваиванием
+ * @param other Другой цвет
+ */
 RGBColor& RGBColor::operator-=(const RGBColor& other) {
     red -= other.red;
     green -= other.green;
     blue -= other.blue;
     
-    // Обрезаем до 0
     if (red < 0) red = 0;
     if (green < 0) green = 0;
     if (blue < 0) blue = 0;
@@ -120,7 +150,10 @@ RGBColor& RGBColor::operator-=(const RGBColor& other) {
     return *this;
 }
 
-// ОПЕРАТОР *=
+/**
+ * @brief Умножение на число
+ * @param factor Множитель
+ */
 RGBColor& RGBColor::operator*=(int factor) {
     red *= factor;
     green *= factor;
@@ -133,9 +166,11 @@ RGBColor& RGBColor::operator*=(int factor) {
     return *this;
 }
 
-// ОПЕРАТОР /=
+/**
+ * @brief Деление на число
+ * @param factor Делитель (не 0)
+ */
 RGBColor& RGBColor::operator/=(int factor) {
-    // Проверка деления на 0
     if (factor == 0) {
         std::cout << "❌ Ошибка: деление на 0\n";
         return *this;
@@ -146,70 +181,94 @@ RGBColor& RGBColor::operator/=(int factor) {
     return *this;
 }
 
-// БИНАРНЫЙ + (через +=)
+/**
+ * @brief Бинарный + (через +=)
+ */
 RGBColor operator+(RGBColor lhs, const RGBColor& rhs) {
-    lhs += rhs;     // используем уже написанный +=
+    lhs += rhs;
     return lhs;
 }
 
-// БИНАРНЫЙ - (через -=)
+/**
+ * @brief Бинарный - (через -=)
+ */
 RGBColor operator-(RGBColor lhs, const RGBColor& rhs) {
     lhs -= rhs;
     return lhs;
 }
 
-// БИНАРНЫЙ * (через *=)
+/**
+ * @brief Бинарный * (через *=)
+ */
 RGBColor operator*(RGBColor lhs, int factor) {
     lhs *= factor;
     return lhs;
 }
 
-// БИНАРНЫЙ / (через /=)
+/**
+ * @brief Бинарный / (через /=)
+ */
 RGBColor operator/(RGBColor lhs, int factor) {
     lhs /= factor;
     return lhs;
 }
 
-// СРАВНЕНИЕ: < (по яркости)
+/**
+ * @brief Меньше (по яркости)
+ */
 bool RGBColor::operator<(const RGBColor& other) const {
     return getBrightness() < other.getBrightness();
 }
 
-// СРАВНЕНИЕ: > (по яркости)
+/**
+ * @brief Больше (по яркости)
+ */
 bool RGBColor::operator>(const RGBColor& other) const {
     return getBrightness() > other.getBrightness();
 }
 
-// СРАВНЕНИЕ: <=
+/**
+ * @brief Меньше или равно
+ */
 bool RGBColor::operator<=(const RGBColor& other) const {
     return getBrightness() <= other.getBrightness();
 }
 
-// СРАВНЕНИЕ: >=
+/**
+ * @brief Больше или равно
+ */
 bool RGBColor::operator>=(const RGBColor& other) const {
     return getBrightness() >= other.getBrightness();
 }
 
-// СРАВНЕНИЕ: == (по всем каналам)
+/**
+ * @brief Равенство (по каналам)
+ */
 bool RGBColor::operator==(const RGBColor& other) const {
     return red == other.red && green == other.green && blue == other.blue;
 }
 
-// СРАВНЕНИЕ: != (через ==)
+/**
+ * @brief Неравенство (через ==)
+ */
 bool RGBColor::operator!=(const RGBColor& other) const {
     return !(*this == other);
 }
 
-// ВЫВОД ИНФОРМАЦИИ
+/**
+ * @brief Вывести информацию (увеличивает mutable viewCount)
+ */
 void RGBColor::printInfo() const {
-    ++viewCount;    // mutable — можно менять в const-методе
+    ++viewCount;
     
     std::cout << "RGB(" << red << ", " << green << ", " << blue << ")"
               << " | Яркость: " << getBrightness()
               << " | Просмотров: " << viewCount << "\n";
 }
 
-// ПРОВЕРКА КОРРЕКТНОСТИ
+/**
+ * @brief Проверка корректности (каналы 0-255)
+ */
 bool RGBColor::isValid() const {
     return red >= 0 && red <= 255
         && green >= 0 && green <= 255
