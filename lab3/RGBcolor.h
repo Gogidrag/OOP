@@ -30,4 +30,35 @@ public:
     int getBrightness() const;              // Сумма каналов
     static int getColorCount();
     
+    //  УНАРНЫЕ ОПЕРАЦИИ
+    RGBColor& operator++();                 ///< Префиксный ++
+    RGBColor operator++(int);               ///< Постфиксный ++
+    RGBColor& operator--();                 ///< Префиксный --
+    RGBColor operator--(int);               ///< Постфиксный --
     
+    //АРИФМЕТИЧЕСКОЕ ПРИСВАИВАНИЕ
+    RGBColor& operator+=(const RGBColor& other);
+    RGBColor& operator-=(const RGBColor& other);
+    RGBColor& operator*=(int factor);
+    RGBColor& operator/=(int factor);
+    
+    //  БИНАРНЫЕ ОПЕРАЦИИ 
+    friend RGBColor operator+(RGBColor lhs, const RGBColor& rhs);
+    friend RGBColor operator-(RGBColor lhs, const RGBColor& rhs);
+    friend RGBColor operator*(RGBColor lhs, int factor);
+    friend RGBColor operator/(RGBColor lhs, int factor);
+    
+    // СРАВНЕНИЕ 
+    bool operator<(const RGBColor& other) const;
+    bool operator>(const RGBColor& other) const;
+    bool operator<=(const RGBColor& other) const;
+    bool operator>=(const RGBColor& other) const;
+    bool operator==(const RGBColor& other) const;
+    bool operator!=(const RGBColor& other) const;
+    
+    //  ВЫВОД И ПРОВЕРКА 
+    void printInfo() const;
+    bool isValid() const;
+};
+
+#endif
