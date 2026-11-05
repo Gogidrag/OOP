@@ -1,9 +1,10 @@
 #include "WindInstrument.h"
+
 #include <iostream>
 #include <stdexcept>
 
 /**
- * @brief Конструктор духового инструмента.
+ * @brief Создаёт духовой инструмент с заданными характеристиками.
  */
 WindInstrument::WindInstrument(
     const std::string& name,
@@ -12,12 +13,14 @@ WindInstrument::WindInstrument(
     : MusicalInstrument(name),
       diaphragm_(diaphragm),
       material_(material) {
-    if (diaphragm.empty() || material.empty())
+    // Пустые значения не позволяют корректно описать инструмент.
+    if (diaphragm.empty() || material.empty()) {
         throw std::invalid_argument("Invalid wind instrument parameters");
+    }
 }
 
 /**
- * @brief Конструктор копирования.
+ * @brief Копирует базовые и собственные параметры духового инструмента.
  */
 WindInstrument::WindInstrument(const WindInstrument& other)
     : MusicalInstrument(other),
@@ -25,9 +28,10 @@ WindInstrument::WindInstrument(const WindInstrument& other)
       material_(other.material_) {}
 
 /**
- * @brief Оператор присваивания.
+ * @brief Присваивает параметры другого духового инструмента.
  */
 WindInstrument& WindInstrument::operator=(const WindInstrument& other) {
+    // Не выполняем копирование, если источник и приёмник — один объект.
     if (this != &other) {
         MusicalInstrument::operator=(other);
         diaphragm_ = other.diaphragm_;
@@ -37,9 +41,8 @@ WindInstrument& WindInstrument::operator=(const WindInstrument& other) {
 }
 
 /**
- * @brief Настраивает духовой инструмент.
+ * @brief Выводит сообщение о настройке духового инструмента.
  */
 void WindInstrument::tune() {
-    std::cout << "Настройка духового инструмента: "
-              << getName() << std::endl;
+    std::cout << "Настройка духового инструмента: " << getName() << '\n';
 }

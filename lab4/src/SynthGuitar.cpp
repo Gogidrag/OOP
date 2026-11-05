@@ -1,9 +1,10 @@
 #include "SynthGuitar.h"
+
 #include <iostream>
 #include <stdexcept>
 
 /**
- * @brief Создаёт синтезатор-гитару.
+ * @brief Создаёт синтезатор-гитару с начальным пресетом.
  */
 SynthGuitar::SynthGuitar(const std::string& name,
                          int strings,
@@ -12,15 +13,22 @@ SynthGuitar::SynthGuitar(const std::string& name,
     : Guitar(name, strings, tension),
       poweredOn_(false),
       patch_(patch) {
-    if (patch.empty())
+    if (patch.empty()) {
         throw std::invalid_argument("Patch cannot be empty");
+    }
 }
 
+/**
+ * @brief Создаёт копию синтезатор-гитары.
+ */
 SynthGuitar::SynthGuitar(const SynthGuitar& other)
     : Guitar(other),
       poweredOn_(other.poweredOn_),
       patch_(other.patch_) {}
 
+/**
+ * @brief Копирует параметры гитары и электронной части.
+ */
 SynthGuitar& SynthGuitar::operator=(const SynthGuitar& other) {
     if (this != &other) {
         Guitar::operator=(other);
@@ -31,7 +39,7 @@ SynthGuitar& SynthGuitar::operator=(const SynthGuitar& other) {
 }
 
 /**
- * @brief Воспроизводит звук синтезатор-гитары.
+ * @brief Выводит название инструмента и выбранный звуковой пресет.
  */
 void SynthGuitar::play() {
     std::cout << "Синтезатор-гитара " << getName()
@@ -39,6 +47,9 @@ void SynthGuitar::play() {
     registerPlay(getType());
 }
 
+/**
+ * @brief Возвращает строковое обозначение типа синтезатор-гитары.
+ */
 std::string SynthGuitar::getType() const {
     return "SynthGuitar";
 }
@@ -52,11 +63,12 @@ void SynthGuitar::powerOn() {
 }
 
 /**
- * @brief Меняет звуковой пресет.
+ * @brief Устанавливает новый звуковой пресет.
  */
 void SynthGuitar::setPatch(const std::string& patch) {
-    if (patch.empty())
+    if (patch.empty()) {
         throw std::invalid_argument("Patch cannot be empty");
+    }
 
     patch_ = patch;
     std::cout << "Установлен пресет: " << patch_ << '\n';
