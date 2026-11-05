@@ -1,0 +1,66 @@
+@startuml
+
+abstract class MusicalInstrument {
+    # name_ : string
+    {static} - instrumentCount_ : int
+    {static} - playCounts_ : map
+    + play() : void
+    + tune() : void
+    + getType() : string
+    {static} + getInstrumentCount() : int
+    {static} + getMostPlayedType() : string
+}
+
+class StringInstrument {
+    # strings_ : int
+    # tension_ : double
+    # stringTensions_ : vector
+    + tune() : void
+}
+
+class WindInstrument {
+    # diaphragm_ : string
+    # material_ : string
+    + tune() : void
+}
+
+class Guitar {
+    + play() : void
+    + getType() : string
+}
+
+class Violin {
+    + play() : void
+    + getType() : string
+}
+
+class Flute {
+    - keys_ : int
+    + play() : void
+    + getType() : string
+}
+
+interface IElectronicDevice {
+    + powerOn() : void
+    + setPatch(patch) : void
+}
+
+class SynthGuitar {
+    - poweredOn_ : bool
+    - patch_ : string
+    + play() : void
+    + powerOn() : void
+    + setPatch(patch) : void
+}
+
+MusicalInstrument <|-- StringInstrument
+MusicalInstrument <|-- WindInstrument
+
+StringInstrument <|-- Guitar
+StringInstrument <|-- Violin
+WindInstrument <|-- Flute
+
+Guitar <|-- SynthGuitar
+IElectronicDevice <|.. SynthGuitar
+
+@enduml
