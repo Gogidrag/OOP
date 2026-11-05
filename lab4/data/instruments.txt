@@ -1,0 +1,16 @@
+# type|name|parameter1|parameter2|parameter3
+Guitar|Yamaha F310|6|12.5|-
+Guitar|Fender CD60|6|13.0|-
+Guitar|Ibanez V50|6|11.5|-
+
+Violin|Stentor 1400|4|10.0|-
+Violin|Stradivarius Copy|4|12.0|-
+Violin|Cremona SV|4|11.0|-
+
+Flute|Yamaha YFL|Silver|Nickel|16
+Flute|Pearl PF|Silver|Silver|16
+Flute|Jupiter JFL|Nickel|Nickel|16
+
+SynthGuitar|Roland G-707|6|12.0|Synth
+SynthGuitar|Line6 Variax|6|13.0|Electric
+SynthGuitar|Casio DG|6|11.0|Digital
