@@ -1,0 +1,15 @@
+PROJECT_NAME           = "OOP Lab 4 - Musical Instruments"
+PROJECT_BRIEF          = "Лабораторная работа №4, вариант 9"
+OUTPUT_DIRECTORY       = docs
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+INPUT                  = include src
+FILE_PATTERNS           = *.h *.cpp
+RECURSIVE              = YES
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = NO
+HTML_OUTPUT             = html
