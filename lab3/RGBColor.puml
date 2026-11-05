@@ -1,0 +1,61 @@
+@startuml RGBColor
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class RGBColor {
+    - red : int
+    - green : int
+    - blue : int
+    - {mutable} viewCount : int
+    - {static} colorCount : int
+    --
+    + RGBColor()
+    + RGBColor(r : int, g : int, b : int)
+    + {explicit} RGBColor(brightness : int)
+    + RGBColor(other : RGBColor&)
+    + ~RGBColor()
+    --
+    + getRed() : int
+    + getGreen() : int
+    + getBlue() : int
+    + getBrightness() : int
+    + {static} getColorCount() : int
+    --
+    + operator++() : RGBColor&
+    + operator++(int) : RGBColor
+    + operator--() : RGBColor&
+    + operator--(int) : RGBColor
+    --
+    + operator+=(other : RGBColor&) : RGBColor&
+    + operator-=(other : RGBColor&) : RGBColor&
+    + operator*=(factor : int) : RGBColor&
+    + operator/=(factor : int) : RGBColor&
+    --
+    + operator+(lhs, rhs) : RGBColor
+    + operator-(lhs, rhs) : RGBColor
+    + operator*(lhs, factor) : RGBColor
+    + operator/(lhs, factor) : RGBColor
+    --
+    + operator<(other) : bool
+    + operator>(other) : bool
+    + operator<=(other) : bool
+    + operator>=(other) : bool
+    + operator==(other) : bool
+    + operator!=(other) : bool
+    --
+    + printInfo() : void
+    + isValid() : bool
+}
+
+note right of RGBColor
+    <b>Особенности:</b>
+    -- 3 конструктора (+ explicit)
+    -- 4 унарных оператора (++/--)
+    -- 4 арифметических присваивания
+    -- 4 бинарных оператора
+    -- 6 операторов сравнения
+    -- mutable viewCount
+    -- static colorCount
+end note
+
+@enduml
