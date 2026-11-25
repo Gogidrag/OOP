@@ -51,3 +51,38 @@ public:
     Polygon(const array<Point<T>, V>& points) : vertices(points) {
         totalPolygonsDefined++;
     }
+
+    // Создает копию и учитывает ее как новый объект.
+    Polygon(const Polygon& other) : vertices(other.vertices) {
+        totalPolygonsDefined++;
+    }
+
+    // Возвращает вершину, не изменяя фигуру.
+    Point<T> getVertex(size_t i) const {
+        return vertices[i];
+    }
+
+    // Вычисляет площадь по формуле Гаусса.
+    // Складывает произведения соседних вершин.
+    long double area() const {
+        long double sum = 0;
+        for (size_t i = 0; i < V; i++) {
+            // После последней вершины возвращаемся к первой.
+            size_t next = (i + 1) % V;
+            sum += crossProduct(vertices[i], vertices[next]);
+        }
+        return abs(sum) / 2;
+    }
+
+    // Статический метод можно вызвать без создания объекта.
+    static size_t getTotalPolygonsDefined() {
+        return totalPolygonsDefined;
+    }
+
+    // friend разрешает внешней функции изменять private-поле vertices.
+    friend void translate<T, V>(Polygon<T, V>& p, T dx, T dy);
+};
+
+// Каждый набор шаблонных параметров имеет отдельный счетчик.
+template <typename T, size_t V>
+size_t Polygon<T, V>::totalPolygonsDefined = 0;
