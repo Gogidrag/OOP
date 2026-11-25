@@ -200,3 +200,64 @@ template <typename T, size_t V>
 void printPolygon(const Polygon<T, V>& p) {
     printBasic(p);
 }
+
+// Явная специализация функции: для четырехугольника с double
+// дополнительно выводим, выпуклый он или нет.
+template <>
+void printPolygon<double, 4>(const Polygon<double, 4>& p) {
+    printBasic(p); // Не повторяем общий код вывода.
+    if (p.isConvex()) cout << "Выпуклый: Да\n";
+    else cout << "Выпуклый: Нет\n";
+}
+
+// Читает один объект и проверяет его перемещение.
+template <typename T, size_t V>
+void testPolygon(ifstream& file, int number) {
+    array<Point<T>, V> points;
+    for (size_t i = 0; i < V; i++) {
+        if (!(file >> points[i].x >> points[i].y))
+            throw runtime_error("Ошибка чтения координат");
+    }
+    Polygon<T, V> p(points);
+    cout << "\nМногоугольник №" << number << '\n';
+    printPolygon(p);
+    // Приводим сдвиг к типу T, чтобы подходил любому шаблону.
+    translate(p, T(2), T(1));
+    cout << "После перемещения (2; 1):\n";
+    printPolygon(p);
+}
+
+// Открываем файл, считываем 10 фигур и проверяем работу функций.
+int main() {
+    ifstream file("polygons.txt");
+    if (!file) {
+        cerr << "Не удалось открыть polygons.txt\n";
+        return 1;
+    }
+    cout << fixed << setprecision(2);
+    try {
+        for (int i = 1; i <= 10; i++) {
+            int count;
+            if (!(file >> count)) throw runtime_error("Недостаточно объектов");
+            // V известен при компиляции, поэтому выбираем готовый шаблон.
+            if (count == 3) testPolygon<int, 3>(file, i);
+            else if (count == 4) testPolygon<double, 4>(file, i);
+            else if (count == 5) testPolygon<double, 5>(file, i);
+            else throw runtime_error("Неверное число вершин");
+        }
+        string extra;
+        if (file >> extra) throw runtime_error("Лишние данные в файле");
+    } catch (const exception& error) {
+        cerr << "Ошибка: " << error.what() << '\n';
+        return 1;
+    }
+    // Складываем счетчики трех использованных вариантов шаблона.
+    size_t triangles = Polygon<int, 3>::getTotalPolygonsDefined();
+    size_t quads = Polygon<double, 4>::getTotalPolygonsDefined();
+    size_t pentagons = Polygon<double, 5>::getTotalPolygonsDefined();
+    cout << "\nТреугольников: " << triangles;
+    cout << "\nЧетырехугольников: " << quads;
+    cout << "\nПятиугольников: " << pentagons;
+    cout << "\nВсего объектов: " << triangles + quads + pentagons << '\n';
+    return 0;
+}
