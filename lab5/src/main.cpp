@@ -142,3 +142,61 @@ public:
         // Если есть и правые, и левые повороты, фигура не выпуклая.
         return !(positive && negative);
     }
+
+    // Возвращает число созданных четырехугольников.
+    static size_t getTotalPolygonsDefined() {
+        return totalPolygonsDefined;
+    }
+    // Для специализации тоже открываем доступ функции translate.
+    friend void translate<double, 4>(Polygon<double, 4>& p, double dx, double dy);
+};
+size_t Polygon<double, 4>::totalPolygonsDefined = 0;
+
+// Дружественная шаблонная функция: сдвигает все вершины на dx и dy.
+// Площадь при этом не меняется.
+template <typename T, size_t V>
+void translate(Polygon<T, V>& p, T dx, T dy) {
+    for (size_t i = 0; i < V; i++) {
+        p.vertices[i].x += dx;
+        p.vertices[i].y += dy;
+    }
+}
+
+// Глобальная шаблонная функция для расчета центроида (центра площади).
+// Работает с любым допустимым T и V.
+template <typename T, size_t V>
+Point<long double> calculateCentroid(const Polygon<T, V>& p) {
+    long double sum = 0, centerX = 0, centerY = 0;
+    for (size_t i = 0; i < V; i++) {
+        Point<T> a = p.getVertex(i);
+        Point<T> b = p.getVertex((i + 1) % V);
+        long double cross = crossProduct(a, b);
+        // Знаковая удвоенная площадь и суммы для центра.
+        sum += cross;
+        long double ax = a.x, ay = a.y;
+        centerX += (ax + b.x) * cross;
+        centerY += (ay + b.y) * cross;
+    }
+    if (sum == 0) throw domain_error("Нулевая площадь");
+    // sum = 2 * знаковая площадь, поэтому делим на 3 * sum.
+    return {centerX / (3 * sum), centerY / (3 * sum)};
+}
+
+// Общий вывод вершин, площади и центроида.
+template <typename T, size_t V>
+void printBasic(const Polygon<T, V>& p) {
+    cout << "Вершины: ";
+    for (size_t i = 0; i < V; i++) {
+        Point<T> point = p.getVertex(i);
+        cout << "(" << point.x << "; " << point.y << ") ";
+    }
+    Point<long double> center = calculateCentroid(p);
+    cout << "\nПлощадь: " << p.area();
+    cout << "\nЦентроид: (" << center.x << "; " << center.y << ")\n";
+}
+
+// Глобальная шаблонная функция вывода для любого многоугольника.
+template <typename T, size_t V>
+void printPolygon(const Polygon<T, V>& p) {
+    printBasic(p);
+}
