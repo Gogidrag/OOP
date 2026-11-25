@@ -1,0 +1,68 @@
+@startuml
+
+title Геометрические примитивы
+
+skinparam classAttributeIconSize 0
+
+class "Point<T>" as Point {
+    + x : T
+    + y : T
+}
+
+class "Polygon<T, V>" as Polygon <<template>> {
+    - vertices : array<Point<T>, V>
+    {static} - totalPolygonsDefined : size_t
+
+    + Polygon(points)
+    + Polygon(other)
+    + getVertex(i) : Point<T>
+    + area() : long double
+    {static} + getTotalPolygonsDefined() : size_t
+}
+
+class "Polygon<double, 4>" as Quad <<specialization>> {
+    - vertices : array<Point<double>, 4>
+    {static} - totalPolygonsDefined : size_t
+
+    + Polygon(points)
+    + Polygon(other)
+    + getVertex(i) : Point<double>
+    + area() : long double
+    + isConvex() : bool
+    {static} + getTotalPolygonsDefined() : size_t
+}
+
+Polygon *-- "V" Point : вершины
+Quad *-- "4" Point : вершины
+
+Quad ..> Polygon : полная специализация
+
+note right of Polygon
+    T - тип координат
+    V - количество вершин
+    V >= 3
+    friend: translate<T, V>
+end note
+
+note right of Quad
+    Вычисление площади без цикла
+    Проверка выпуклости
+    friend: translate<double, 4>
+end note
+
+note bottom of Polygon
+    Глобальные шаблонные функции:
+    crossProduct(a, b)
+    calculateCentroid(p)
+    printBasic(p)
+    printPolygon(p)
+    translate(p, dx, dy)
+    testPolygon(file, number)
+end note
+
+note bottom of Quad
+    Специализация функции:
+    printPolygon<double, 4>(p)
+end note
+
+@enduml
